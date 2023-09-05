@@ -4,6 +4,8 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Product, ProductDocument} from "./schmemas/product.shema";
 import {Model} from "mongoose";
 import {UpdateProductDto} from "./dto/update-product.dto";
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Injectable()
 export class ProductsService {
@@ -19,7 +21,10 @@ export class ProductsService {
     }
 
     async create(productDto: CreateProductDto) {
-        const newProduct = new this.productModel(productDto)
+        const newProduct = new this.productModel({
+            _id: uuidv4(),
+            ...productDto
+        });
         return newProduct.save()
     }
 

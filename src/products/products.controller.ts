@@ -2,36 +2,53 @@ import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put} f
 import {CreateProductDto} from "./dto/create-product.dto";
 import {UpdateProductDto} from "./dto/update-product.dto";
 import {ProductsService} from "./products.service";
+import {ApiTags, ApiOperation, ApiParam, ApiBody, ApiOkResponse} from '@nestjs/swagger';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
 
     constructor(private productService: ProductsService) {
     }
 
+    @ApiOperation({summary: 'Отримати всі товари'})
+    @ApiOkResponse({type: [CreateProductDto], description: 'Успішно повернуто список товарів.'})
     @Get()
     getAll(): any {
         return this.productService.getAll()
     }
 
-    @Get(":id")
-    getById(@Param("id") id: string) {
+    @ApiOperation({summary: 'Отримати товар за ID'})
+    @ApiParam({name: 'id', required: true, description: 'Ідентифікатор товару'})
+    @ApiOkResponse({type: CreateProductDto, description: 'Успішно повернуто товар.'})
+    @Get(':id')
+    getById(@Param('id') id: string) {
         return this.productService.getById(id)
     }
 
+    @ApiOperation({summary: 'Створити новий товар'})
+    @ApiBody({type: CreateProductDto, description: 'Дані для створення товару'})
+    @ApiOkResponse({description: 'Товар успішно створено.'})
     @Post()
     create(@Body() createProductDto: CreateProductDto): any {
         return this.productService.create(createProductDto)
     }
 
-    @Put(":id")
-    update(@Param("id") id: string, @Body() updateProductDto: UpdateProductDto) {
+    @ApiOperation({summary: 'Оновити існуючий товар за ID'})
+    @ApiParam({name: 'id', required: true, description: 'Ідентифікатор товару для оновлення'})
+    @ApiBody({type: UpdateProductDto, description: 'Оновлені дані товару'})
+    @ApiOkResponse({description: 'Товар успішно оновлено.'})
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
         return this.productService.update(id, updateProductDto)
     }
 
-    @Delete(":id")
+    @ApiOperation({summary: 'Видалити товар за ID'})
+    @ApiParam({name: 'id', required: true, description: 'Ідентифікатор товару для видалення'})
+    @ApiOkResponse({description: 'Товар успішно видалено.'})
+    @Delete(':id')
     @HttpCode(HttpStatus.OK)
-    delete(@Param("id") id: string) {
+    delete(@Param('id') id: string) {
         return this.productService.remove(id)
     }
 
