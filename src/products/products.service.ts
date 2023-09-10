@@ -33,7 +33,8 @@ export class ProductsService {
     }
 
     async remove(id) {
-        return this.productModel.findByIdAndRemove(id)
+        const result = await this.productModel.findByIdAndRemove(id.toString());
+        return result !== null;
     }
 
 }

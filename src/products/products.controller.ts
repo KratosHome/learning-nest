@@ -43,12 +43,12 @@ export class ProductsController {
         return this.productService.update(id, updateProductDto)
     }
 
-    @ApiOperation({summary: 'Видалити товар за ID'})
+    @ApiOperation({summary: 'delete product by id'})
     @ApiParam({name: 'id', required: true, description: 'Ідентифікатор товару для видалення'})
-    @ApiOkResponse({description: 'Товар успішно видалено.'})
+    @ApiOkResponse({description: 'true'})
     @Delete(':id')
     @HttpCode(HttpStatus.OK)
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: string): Promise<boolean>  {
         return this.productService.remove(id)
     }
 
