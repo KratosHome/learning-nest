@@ -1,4 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
+import {IsEmpty, IsNotEmpty} from "class-validator";
 
 class ProductVariantDto {
     @ApiProperty()
@@ -31,19 +32,31 @@ export class CreateProductDto {
     @ApiProperty()
     readonly updatedAt: Date;
 
-    @ApiProperty()
+    @IsNotEmpty()
+    @ApiProperty({
+        description: "required field"
+    })
     readonly url: string
 
-    @ApiProperty()
+    @IsNotEmpty()
+    @ApiProperty({
+        description: "required field"
+    })
     readonly isLux: boolean
 
-    @ApiProperty()
+    @IsNotEmpty()
+    @ApiProperty({
+        description: "required field"
+    })
     readonly title: string
 
     @ApiProperty()
     readonly subTitle: string
 
-    @ApiProperty()
+    @IsNotEmpty()
+    @ApiProperty({
+        description: "required field"
+    })
     readonly img: string
 
     @ApiProperty()

@@ -8,10 +8,11 @@ import { CategoriesModule } from './categories/categories.module';
 import { UsersModule } from './users/users.module';
 import { BrendsController } from './brends/brends.controller';
 import { BrendsModule } from './brends/brends.module';
+import { OrdersController } from './orders/orders.controller';
 
 
 @Module({
-    controllers: [AppController, BrendsController],
+    controllers: [AppController, BrendsController, OrdersController],
     imports: [
         MongooseModule.forRoot(
             process.env.mongoDB_URI,

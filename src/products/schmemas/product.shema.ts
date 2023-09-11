@@ -20,6 +20,9 @@ export class Product {
     @Prop()
     prise: number
 
+    @Prop()
+    isLux: boolean
+
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product)

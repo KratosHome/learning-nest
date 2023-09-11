@@ -1,4 +1,16 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    Post,
+    Put,
+    UsePipes,
+    ValidationPipe
+} from '@nestjs/common';
 import {CreateProductDto} from "./dto/create-product.dto";
 import {UpdateProductDto} from "./dto/update-product.dto";
 import {ProductsService} from "./products.service";
@@ -8,14 +20,20 @@ import {ApiTags, ApiOperation, ApiParam, ApiBody, ApiOkResponse} from '@nestjs/s
 @Controller('products')
 export class ProductsController {
 
-    constructor(private productService: ProductsService) {
-    }
+    constructor(private productService: ProductsService) {}
 
     @ApiOperation({summary: 'Отримати всі товари'})
     @ApiOkResponse({type: [CreateProductDto], description: 'Успішно повернуто список товарів.'})
     @Get()
     getAll(): any {
         return this.productService.getAll()
+    }
+
+    @ApiOperation({summary: 'пошук по назві'})
+    @ApiOkResponse({type: [CreateProductDto], description: 'Успішно повернуто список товарів.'})
+    @Get("search")
+    search(): any {
+        return []
     }
 
     @ApiOperation({summary: 'Отримати товар за ID'})
@@ -30,6 +48,7 @@ export class ProductsController {
     @ApiBody({type: CreateProductDto, description: 'Дані для створення товару'})
     @ApiOkResponse({description: 'Товар успішно створено.'})
     @Post()
+    @UsePipes(ValidationPipe)
     create(@Body() createProductDto: CreateProductDto): any {
         return this.productService.create(createProductDto)
     }
